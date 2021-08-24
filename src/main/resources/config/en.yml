@@ -1,0 +1,14 @@
+# ScriptEntityPlus v${project.version} Config #
+
+
+## ===== For Developers ===== ##
+# Basically, non-developers should not change the settings.
+# Please specify the exact ClassPath of the Option.
+# This function rewrites the coordinates to be retrieved to the coordinates of the entity.
+FilterOptions:
+- 'com.github.yuttyann.scriptblockplus.script.option.chat.Command'
+- 'com.github.yuttyann.scriptblockplus.script.option.chat.Console'
+- 'com.github.yuttyann.scriptblockplus.script.option.chat.BypassOP'
+- 'com.github.yuttyann.scriptblockplus.script.option.vault.BypassPerm'
+- 'com.github.yuttyann.scriptblockplus.script.option.vault.BypassGroup'
+- 'com.github.yuttyann.scriptblockplus.script.option.other.PlaySound'

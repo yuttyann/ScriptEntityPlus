@@ -1,0 +1,14 @@
+# ScriptEntityPlus v${project.version} Config #
+
+
+## ===== 開発者向け ===== ##
+# 基本的に開発者以外は設定を変更しないでください。
+# オプションの正確なクラスパスを指定してください。
+# オプション内で取得する座標をエンティティの座標へ書き換える機能です。
+FilterOptions:
+- 'com.github.yuttyann.scriptblockplus.script.option.chat.Command'
+- 'com.github.yuttyann.scriptblockplus.script.option.chat.Console'
+- 'com.github.yuttyann.scriptblockplus.script.option.chat.BypassOP'
+- 'com.github.yuttyann.scriptblockplus.script.option.vault.BypassPerm'
+- 'com.github.yuttyann.scriptblockplus.script.option.vault.BypassGroup'
+- 'com.github.yuttyann.scriptblockplus.script.option.other.PlaySound'

@@ -48,9 +48,8 @@ public class SEFiles implements Listener {
 
     public static void reload() {
         Plugin plugin = ScriptEntity.getInstance();
-        ConfigKeys.load(loadFile(plugin, PATH_CONFIG, true));
-        ConfigKeys.load(loadLang(plugin, PATH_LANGS));
-        searchKeys(plugin, PATH_CONFIG, PATH_LANGS);
+        ConfigKeys.load(loadLang(plugin, PATH_CONFIG, "config"));
+        ConfigKeys.load(loadLang(plugin, PATH_MESSAGE, "message"));
 
         // ファイル"json/scriptentity"を"json/entityscript"にリネーム
         File dataFolder = ScriptBlock.getInstance().getDataFolder();

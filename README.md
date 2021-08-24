@@ -1,4 +1,4 @@
-ScriptEntityPlus [Java8 MC1.9-1.16.x]
+ScriptEntityPlus [Java8 MC1.9-1.17.1]
 ==========
 概要
 --------------------------------------------------
@@ -7,7 +7,7 @@ ScriptEntityPlus [Java8 MC1.9-1.16.x]
 導入
 -----------
 [Releases](https://github.com/yuttyann/ScriptEntityPlus/releases)または[Yuttyann Files](https://file.yuttyann44581.net/)から`ScriptEntityPlus`のダウンロードを行ってください。  
-その後前提プラグインである[`ScriptBlockPlus`](https://github.com/yuttyann/ScriptBlockPlus/releases)(v2.0.1以降)をダウンロードを行い`plugins`フォルダへ保存すれば完了です。  
+その後前提プラグインである[`ScriptBlockPlus`](https://github.com/yuttyann/ScriptBlockPlus/releases)(最新版を推奨)をダウンロードを行い`plugins`フォルダへ保存すれば完了です。  
 
 使い方
 -----------
@@ -49,9 +49,9 @@ ScriptEntityPlus [Java8 MC1.9-1.16.x]
 ファイル関係
 -----------
 ファイルの管理: `ScriptBlockPlusのスクリプトの種類と座標をエンティティのUUIDを元に保存しているため、`  
-`UUIDの変更(例: 額縁のアイテムを変更等)があった場合設定ファイルが残存し続けてしまうので注意してください。` 
+`UUIDの変更(例: 額縁のアイテムを変更等)があった場合設定ファイルが残存し続けてしまうので注意してください。`  
 
-ファイルのパス: `設定の保存先は` **`plugins/ScriptBlockPlus/json/entityscript/....`** `です。`   
+ファイルのパス: `設定の保存先は` **`plugins/ScriptBlockPlus/json/entityscript/....`** `です。`  
   
 ファイルの削除: `ツールでの削除またはプレイヤー以外が死亡した場合に設定ファイルが削除されます。`  
 `また、エンティティのスクリプトを削除しても設定元のスクリプトには影響はありません。`  
@@ -62,5 +62,5 @@ ScriptEntityPlus [Java8 MC1.9-1.16.x]
 
 プラグイン記事
 -----------
-**[[MCPoteton, JP-使い方と機能の紹介]](https://mcpoteton.com/mcpl-scriptentityplus)**  
-**[[SpigotMC, EN-Explanation of the plugin]](https://www.spigotmc.org/resources/1-9-1-15-2-scriptentityplus-mechanics.80165/)**  
+**[[Poteton, JP]](https://mcpoteton.com/mcpl-scriptentityplus)**  
+**[[SpigotMC, EN]](https://www.spigotmc.org/resources/scriptentityplus.80165/)**  

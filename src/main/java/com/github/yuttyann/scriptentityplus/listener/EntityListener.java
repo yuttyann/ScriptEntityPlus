@@ -218,7 +218,7 @@ public class EntityListener implements Listener {
         if (!BlockScriptJson.newJson(ScriptKey.valueOf(array[0])).has(blockCoords)) {
             return;
         }
-        EntityScriptRead scriptRead = new EntityScriptRead(player, blockCoords, ScriptKey.valueOf(array[0]));
+        EntityScriptRead scriptRead = new EntityScriptRead(SBPlayer.fromPlayer(player), blockCoords, ScriptKey.valueOf(array[0]));
         scriptRead.setEntity(entity);
         scriptRead.put(ScriptAction.KEY, action);
         scriptRead.read(0);

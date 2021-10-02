@@ -16,6 +16,7 @@
 package com.github.yuttyann.scriptentityplus.script;
 
 import com.github.yuttyann.scriptblockplus.BlockCoords;
+import com.github.yuttyann.scriptblockplus.player.SBPlayer;
 import com.github.yuttyann.scriptblockplus.script.ScriptRead;
 import com.github.yuttyann.scriptblockplus.script.ScriptKey;
 import com.github.yuttyann.scriptblockplus.script.option.BaseOption;
@@ -24,7 +25,6 @@ import com.github.yuttyann.scriptentityplus.file.SEFiles;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -44,8 +44,8 @@ public final class EntityScriptRead extends ScriptRead {
     private Entity entity;
     private Location entityLocation;
 
-    public EntityScriptRead(@NotNull Player player, @NotNull BlockCoords blockCoords, @NotNull ScriptKey scriptKey) {
-        super(player, blockCoords, scriptKey);
+    public EntityScriptRead(@NotNull SBPlayer sbPlayer, @NotNull BlockCoords blockCoords, @NotNull ScriptKey scriptKey) {
+        super(sbPlayer, blockCoords, scriptKey);
     }
 
     @NotNull

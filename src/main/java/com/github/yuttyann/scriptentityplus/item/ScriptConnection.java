@@ -18,7 +18,7 @@ package com.github.yuttyann.scriptentityplus.item;
 import com.github.yuttyann.scriptblockplus.BlockCoords;
 import com.github.yuttyann.scriptblockplus.file.config.SBConfig;
 import com.github.yuttyann.scriptblockplus.file.json.derived.BlockScriptJson;
-import com.github.yuttyann.scriptblockplus.file.json.element.BlockScript;
+import com.github.yuttyann.scriptblockplus.file.json.derived.element.BlockScript;
 import com.github.yuttyann.scriptblockplus.item.ChangeSlot;
 import com.github.yuttyann.scriptblockplus.item.ItemAction;
 import com.github.yuttyann.scriptblockplus.item.RunItem;
@@ -37,7 +37,9 @@ import com.github.yuttyann.scriptentityplus.json.tellraw.*;
 import com.github.yuttyann.scriptentityplus.listener.EntityListener;
 import com.github.yuttyann.scriptentityplus.listener.PlayerListener;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.permissions.Permissible;
 import org.jetbrains.annotations.NotNull;
 
@@ -51,7 +53,8 @@ public class ScriptConnection extends ItemAction {
     private static final String KEY = Utils.randomUUID();
 
     public ScriptConnection() {
-        super(ToolMode.getItem());
+        super(Material.BONE, () -> "§dScript Connection", SEConfig.SCRIPT_CONNECTION::setListColor);
+        setItemFlags(ItemFlag.HIDE_ATTRIBUTES);
     }
 
     @Override

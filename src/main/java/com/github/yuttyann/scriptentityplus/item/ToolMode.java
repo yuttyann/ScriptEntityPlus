@@ -17,15 +17,9 @@ package com.github.yuttyann.scriptentityplus.item;
 
 import com.github.yuttyann.scriptblockplus.enums.MatchType;
 import com.github.yuttyann.scriptblockplus.utils.ItemUtils;
-import com.github.yuttyann.scriptblockplus.utils.StringUtils;
-import com.github.yuttyann.scriptentityplus.file.SEConfig;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public enum ToolMode {
     NORMAL_SCRIPT("NORMAL MODE"),
@@ -43,17 +37,6 @@ public enum ToolMode {
 
     public static boolean isItem(@NotNull ItemStack item) {
         return ItemUtils.compare(MatchType.TYPE, item, Material.BONE) && ItemUtils.compare(MatchType.NAME, item, "§dScript Connection");
-    }
-
-    @NotNull
-    public static ItemStack getItem() {
-        ItemStack item = new ItemStack(Material.BONE);
-        ItemMeta meta = Objects.requireNonNull(item.getItemMeta());
-        meta.setDisplayName("§dScript Connection");
-        meta.setLore(StringUtils.setListColor(SEConfig.SCRIPT_CONNECTION.getValue()));
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        item.setItemMeta(meta);
-        return item;
     }
 
     @NotNull

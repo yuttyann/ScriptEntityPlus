@@ -25,7 +25,7 @@ import java.util.UUID;
 @JsonTag(path = "json/entityscript")
 public class EntityScriptJson extends SingleJson<EntityScript> {
 
-    private EntityScriptJson(@NotNull String name) {
+    public EntityScriptJson(@NotNull String name) {
         super(name);
     }
 

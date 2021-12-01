@@ -15,7 +15,7 @@
  */
 package com.github.yuttyann.scriptentityplus.listener;
 
-import com.github.yuttyann.scriptblockplus.enums.server.ClassType;
+import com.github.yuttyann.scriptblockplus.enums.server.reflect.ClassType;
 import com.github.yuttyann.scriptentityplus.json.EntityScript;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

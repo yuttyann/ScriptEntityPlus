@@ -26,17 +26,11 @@ import java.util.UUID;
 public class EntityScriptJson extends SingleJson<EntityScript> {
 
     public EntityScriptJson(@NotNull String name) {
-        super(name);
-    }
-
-    @Override
-    @NotNull
-    protected EntityScript newInstance() {
-        return new EntityScript();
+        super(name, EntityScript::new);
     }
 
     @NotNull
-    public static EntityScriptJson newJson(@NotNull UUID uuid) {
+    public static EntityScriptJson get(@NotNull UUID uuid) {
         return newJson(EntityScriptJson.class, uuid.toString());
     }
 }

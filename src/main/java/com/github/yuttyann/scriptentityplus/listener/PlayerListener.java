@@ -18,6 +18,7 @@ package com.github.yuttyann.scriptentityplus.listener;
 import com.github.yuttyann.scriptblockplus.enums.Permission;
 import com.github.yuttyann.scriptblockplus.player.SBPlayer;
 import com.github.yuttyann.scriptblockplus.script.ScriptKey;
+import com.github.yuttyann.scriptblockplus.utils.StringUtils;
 import com.github.yuttyann.scriptblockplus.utils.Utils;
 import com.github.yuttyann.scriptentityplus.SEPermission;
 import com.github.yuttyann.scriptentityplus.ScriptEntity;
@@ -34,8 +35,8 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.server.ServerCommandEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.UUID;
-import java.util.regex.Pattern;
 
 public class PlayerListener implements Listener {
 
@@ -66,35 +67,35 @@ public class PlayerListener implements Listener {
         Player player = event.getPlayer();
         String chat = event.getMessage();
         if (chat.lastIndexOf("/" + KEY_TOOL) != -1 && SEPermission.TOOL_SCRIPT_CONNECTION.has(player)) {
-            String[] array = { chat.split("/")[0] };
-            String type = ScriptKey.valueOf(array[0].split(Pattern.quote("|"))[0]).getName();
+            String[] array = { StringUtils.split(chat, '/').get(0) };
+            String type = ScriptKey.valueOf(StringUtils.split(array[0], '|').get(0)).getName();
             SBPlayer.fromPlayer(player).getObjectMap().put(KEY_SCRIPT, array);
             SEConfig.SCRIPT_SELECT.replace(type).send(player);
             event.setCancelled(true);
         } else if (chat.lastIndexOf("/" + KEY_SETTINGS) != -1 && SEPermission.TOOL_SCRIPT_CONNECTION.has(player)) {
-            String[] array = chat.split("/")[0].split("=");
-            EntityScriptJson entityScriptJson = EntityScriptJson.newJson(UUID.fromString(array[1]));
+            List<String> list = StringUtils.split(StringUtils.split(chat, '/').get(0), '=');
+            EntityScriptJson entityScriptJson = EntityScriptJson.get(UUID.fromString(list.get(1)));
             if (entityScriptJson.exists()) {
-                setting(player, array, entityScriptJson.load());
+                setting(player, list, entityScriptJson.load());
                 entityScriptJson.saveJson();
             }
             event.setCancelled(true);
         }
     }
 
-    private void setting(@NotNull Player player, @NotNull String[] array, @NotNull EntityScript entityScript) {
-        SettingType settingType = SettingType.get(array[0]);
-        ButtonType buttonType = ButtonType.get(array[2]);
+    private void setting(@NotNull Player player, @NotNull List<String> list, @NotNull EntityScript entityScript) {
+        SettingType settingType = SettingType.get(list.get(0));
+        ButtonType buttonType = ButtonType.get(list.get(2));
         if (settingType != null && buttonType != null) {
             switch (buttonType) {
                 case ENABLED:
                 case DISABLED:
                     settingType.set(entityScript, buttonType.isEnabled());
-                    SEConfig.SETTING_VALUE.replace(array[0], buttonType.getType()).send(player);
+                    SEConfig.SETTING_VALUE.replace(list.get(0), buttonType.getType()).send(player);
                     break;
                 case VIEW:
                     String type = ButtonType.get(settingType.is(entityScript)).getType();
-                    SEConfig.SETTING_VIEW.replace(array[0], type).send(player);
+                    SEConfig.SETTING_VIEW.replace(list.get(0), type).send(player);
                     break;
             }
         }

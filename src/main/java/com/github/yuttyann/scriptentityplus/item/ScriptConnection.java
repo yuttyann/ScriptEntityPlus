@@ -22,12 +22,12 @@ import com.github.yuttyann.scriptblockplus.file.json.derived.element.BlockScript
 import com.github.yuttyann.scriptblockplus.item.ChangeSlot;
 import com.github.yuttyann.scriptblockplus.item.ItemAction;
 import com.github.yuttyann.scriptblockplus.item.RunItem;
-import com.github.yuttyann.scriptblockplus.player.ObjectMap;
 import com.github.yuttyann.scriptblockplus.player.SBPlayer;
 import com.github.yuttyann.scriptblockplus.script.ScriptKey;
 import com.github.yuttyann.scriptblockplus.script.option.chat.ActionBar;
 import com.github.yuttyann.scriptblockplus.utils.StringUtils;
 import com.github.yuttyann.scriptblockplus.utils.Utils;
+import com.github.yuttyann.scriptblockplus.utils.collection.ObjectMap;
 import com.github.yuttyann.scriptentityplus.ScriptEntity;
 import com.github.yuttyann.scriptentityplus.SEPermission;
 import com.github.yuttyann.scriptentityplus.file.SEConfig;
@@ -44,7 +44,6 @@ import org.bukkit.permissions.Permissible;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -64,14 +63,14 @@ public class ScriptConnection extends ItemAction {
 
     @Override
     public void slot(@NotNull ChangeSlot changeSlot) {
-        SBPlayer sbPlayer = SBPlayer.fromPlayer(changeSlot.getPlayer());
+        SBPlayer sbPlayer = changeSlot.getSBPlayer();
         ToolMode toolMode = sbPlayer.getObjectMap().get(KEY, ToolMode.NORMAL_SCRIPT);
         ActionBar.send(sbPlayer, "§6§lToolMode: §b§l" + toolMode.getMode());
     }
 
     @Override
     public void run(@NotNull RunItem runItem) {
-        SBPlayer sbPlayer = SBPlayer.fromPlayer(runItem.getPlayer());
+        SBPlayer sbPlayer = runItem.getSBPlayer();
         ToolMode toolMode = sbPlayer.getObjectMap().get(KEY, ToolMode.NORMAL_SCRIPT);
         switch (runItem.getAction()) {
             case RIGHT_CLICK_BLOCK:
@@ -107,7 +106,7 @@ public class ScriptConnection extends ItemAction {
             JsonBuilder builder = new JsonBuilder();
             builder.add(new JsonElement("ScriptKeys: ", ChatColor.GOLD, ChatFormat.BOLD));
             for (ScriptKey scriptKey : ScriptKey.iterable()) {
-                if (BlockScriptJson.newJson(scriptKey).has(blockCoords)) {
+                if (BlockScriptJson.get(scriptKey).has(blockCoords)) {
                     String chat = scriptKey.toString() + "|" + fullCoords + "/" + PlayerListener.KEY_TOOL;
                     JsonElement element = new JsonElement(scriptKey.toString(), ChatColor.GREEN, ChatFormat.BOLD);
                     element.setClickEvent(ClickEventType.RUN_COMMAND, chat);
@@ -133,7 +132,7 @@ public class ScriptConnection extends ItemAction {
             return;
         }
         if (runItem.isSneaking()) {
-            EntityScriptJson entityScriptJson = EntityScriptJson.newJson(entity.get().getUniqueId());
+            EntityScriptJson entityScriptJson = EntityScriptJson.get(entity.get().getUniqueId());
             if (!entityScriptJson.exists()) {
                 SBConfig.ERROR_SCRIPT_FILE_CHECK.send(sbPlayer);
                 return;
@@ -146,13 +145,13 @@ public class ScriptConnection extends ItemAction {
                 SBConfig.ERROR_SCRIPT_FILE_CHECK.send(sbPlayer);
                 return;
             }
-            EntityScriptJson entityScriptJson = EntityScriptJson.newJson(entity.get().getUniqueId());
+            EntityScriptJson entityScriptJson = EntityScriptJson.get(entity.get().getUniqueId());
             EntityScript entityScript = entityScriptJson.load();
             for (String script : objectMap.get(PlayerListener.KEY_SCRIPT, new String[0])) {
-                String[] array = script.split(Pattern.quote("|"));
-                ScriptKey scriptKey = ScriptKey.valueOf(array[0]);
-                BlockCoords blockCoords = BlockCoords.fromString(array[1]);
-                if (BlockScriptJson.newJson(scriptKey).has(blockCoords)) {
+                List<String> list = StringUtils.split(script, '|');
+                ScriptKey scriptKey = ScriptKey.valueOf(list.get(0));
+                BlockCoords blockCoords = BlockCoords.fromString(list.get(1));
+                if (BlockScriptJson.get(scriptKey).has(blockCoords)) {
                     entityScript.getScripts(toolMode).add(script);
                 }
             }
@@ -171,7 +170,7 @@ public class ScriptConnection extends ItemAction {
         if (!entity.isPresent()) {
             return;
         }
-        EntityScriptJson entityScriptJson = EntityScriptJson.newJson(entity.get().getUniqueId());
+        EntityScriptJson entityScriptJson = EntityScriptJson.get(entity.get().getUniqueId());
         EntityScript entityScript = entityScriptJson.load();
         if (runItem.isSneaking()) {
             if (!entityScriptJson.exists()) {
@@ -202,15 +201,15 @@ public class ScriptConnection extends ItemAction {
             sbPlayer.sendMessage("----- [ Scripts ] -----");
             int index = 0;
             for (String script : entityScript.getScripts(toolMode)) {
-                String[] array = script.split(Pattern.quote("|"));
-                ScriptKey scriptKey = ScriptKey.valueOf(array[0]);
+                List<String> list = StringUtils.split(script, '|');
+                ScriptKey scriptKey = ScriptKey.valueOf(list.get(0));
                 JsonBuilder builder = new JsonBuilder();
                 builder.add(new JsonElement("Index" + (index++) + "=", ChatColor.WHITE));
 
                 JsonElement element = new JsonElement(scriptKey.toString(), ChatColor.GREEN, ChatFormat.BOLD);
-                String command = "/sbp " + scriptKey.getName() + " run " + removeBrank(array[1]).replace(',', ' ');
+                String command = "/sbp " + scriptKey.getName() + " run " + removeBlank(list.get(1)).replace(',', ' ');
                 element.setClickEvent(ClickEventType.SUGGEST_COMMAND, command);
-                element.setHoverEvent(HoverEventType.SHOW_TEXT, getTexts(scriptKey, BlockCoords.fromString(array[1])));
+                element.setHoverEvent(HoverEventType.SHOW_TEXT, getTexts(scriptKey, BlockCoords.fromString(list.get(1))));
                 builder.add(element);
 
                 ScriptEntity.dispatchCommand(sbPlayer.getWorld(), "minecraft:tellraw " + sbPlayer.getName() + " " + builder.toJson());
@@ -220,7 +219,7 @@ public class ScriptConnection extends ItemAction {
     }
 
     @NotNull
-    private String removeBrank(@NotNull String source) {
+    private String removeBlank(@NotNull String source) {
         return org.apache.commons.lang.StringUtils.remove(source, ' ');
     }
 
@@ -252,18 +251,16 @@ public class ScriptConnection extends ItemAction {
 
     @NotNull
     private String getTexts(@NotNull ScriptKey scriptKey, @NotNull BlockCoords blockCoords) {
-        if (!BlockScriptJson.newJson(scriptKey).has(blockCoords)) {
+        if (!BlockScriptJson.get(scriptKey).has(blockCoords)) {
             return "null";
         }
-        BlockScript blockScript = BlockScriptJson.newJson(scriptKey).load(blockCoords);
-        String selector = blockScript.getSelector();
+        BlockScript blockScript = BlockScriptJson.get(scriptKey).load(blockCoords);
         StringBuilder builder = new StringBuilder();
         StringJoiner joiner = new StringJoiner("\n§6- §b");
         blockScript.getScripts().forEach(joiner::add);
         Stream<String> author = blockScript.getAuthors().stream().map(Utils::getName);
         builder.append("§eAuthor: §a").append(author.collect(Collectors.joining(", ")));
         builder.append("\n§eCoords: §a").append(blockCoords.getFullCoords());
-        builder.append("\n§eRedstone: §").append(selector == null ? "cfalse" : "atrue §d: §a" + selector);
         builder.append("\n§eScripts:§e\n§6- §b").append(joiner.toString());
         return builder.toString();
     }

@@ -21,7 +21,7 @@ import com.github.yuttyann.scriptblockplus.event.DelayRunEvent;
 import com.github.yuttyann.scriptblockplus.file.json.derived.BlockScriptJson;
 import com.github.yuttyann.scriptblockplus.item.ItemAction;
 import com.github.yuttyann.scriptblockplus.player.SBPlayer;
-import com.github.yuttyann.scriptblockplus.script.SBRead;
+import com.github.yuttyann.scriptblockplus.script.ScriptRead;
 import com.github.yuttyann.scriptblockplus.script.ScriptKey;
 import com.github.yuttyann.scriptblockplus.script.option.other.PlayerAction;
 import com.github.yuttyann.scriptblockplus.utils.StringUtils;
@@ -197,10 +197,10 @@ public class EntityListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onDelayRun(DelayRunEvent event) {
-        if (!(event.getSBRead() instanceof EntityScriptRead)) {
+        if (!(event.getScriptRead() instanceof EntityScriptRead)) {
             return;
         }
-        EntityScriptRead scriptRead = (EntityScriptRead) event.getSBRead();
+        EntityScriptRead scriptRead = (EntityScriptRead) event.getScriptRead();
         if (scriptRead.getEntity().isDead()) {
             scriptRead.setEntity(ScriptEntity.getInstance().createArmorStand(scriptRead.getLocation()));
         }
@@ -208,9 +208,9 @@ public class EntityListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onDelayEnd(DelayEndEvent event) {
-        SBRead sbRead = event.getSBRead();
-        if (sbRead instanceof EntityScriptRead) {
-            ScriptEntity.getInstance().removeArmorStand(((EntityScriptRead) sbRead).getEntity());
+        ScriptRead scriptRead = event.getScriptRead();
+        if (scriptRead instanceof EntityScriptRead) {
+            ScriptEntity.getInstance().removeArmorStand(((EntityScriptRead) scriptRead).getEntity());
         }
     }
 

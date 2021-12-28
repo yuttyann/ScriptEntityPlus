@@ -20,6 +20,7 @@ import com.github.yuttyann.scriptblockplus.player.SBPlayer;
 import com.github.yuttyann.scriptblockplus.script.ScriptRead;
 import com.github.yuttyann.scriptblockplus.script.ScriptKey;
 import com.github.yuttyann.scriptblockplus.script.option.BaseOption;
+import com.github.yuttyann.scriptblockplus.utils.unmodifiable.UnmodifiableBlockCoords;
 import com.github.yuttyann.scriptblockplus.utils.unmodifiable.UnmodifiableLocation;
 import com.github.yuttyann.scriptentityplus.file.SEFiles;
 
@@ -43,6 +44,7 @@ public final class EntityScriptRead extends ScriptRead {
 
     private Entity entity;
     private Location entityLocation;
+    private BlockCoords entityBlockCoords;
 
     public EntityScriptRead(@NotNull SBPlayer sbPlayer, @NotNull BlockCoords blockCoords, @NotNull ScriptKey scriptKey) {
         super(sbPlayer, blockCoords, scriptKey);
@@ -56,6 +58,7 @@ public final class EntityScriptRead extends ScriptRead {
     public final void setEntity(@NotNull Entity entity) {
         this.entity = entity;
         this.entityLocation = new UnmodifiableLocation(entity.getLocation());
+        this.entityBlockCoords = new UnmodifiableBlockCoords(BlockCoords.of(entityLocation));
     }
 
     @NotNull
@@ -67,5 +70,11 @@ public final class EntityScriptRead extends ScriptRead {
     @NotNull
     public final Location getLocation() {
         return FILTERS.contains(option.getClass()) ? entityLocation : super.getLocation();
+    }
+
+    @Override
+    @NotNull
+    public BlockCoords getBlockCoords() {
+        return FILTERS.contains(option.getClass()) ? entityBlockCoords : super.getBlockCoords();
     }
 }

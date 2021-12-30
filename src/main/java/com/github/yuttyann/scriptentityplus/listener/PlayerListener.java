@@ -15,8 +15,8 @@
  */
 package com.github.yuttyann.scriptentityplus.listener;
 
+import com.github.yuttyann.scriptblockplus.ScriptBlock;
 import com.github.yuttyann.scriptblockplus.enums.Permission;
-import com.github.yuttyann.scriptblockplus.player.SBPlayer;
 import com.github.yuttyann.scriptblockplus.script.ScriptKey;
 import com.github.yuttyann.scriptblockplus.utils.StringUtils;
 import com.github.yuttyann.scriptblockplus.utils.Utils;
@@ -69,7 +69,7 @@ public class PlayerListener implements Listener {
         if (chat.lastIndexOf("/" + KEY_TOOL) != -1 && SEPermission.TOOL_SCRIPT_CONNECTION.has(player)) {
             String[] array = { StringUtils.split(chat, '/').get(0) };
             String type = ScriptKey.valueOf(StringUtils.split(array[0], '|').get(0)).getName();
-            SBPlayer.fromPlayer(player).getObjectMap().put(KEY_SCRIPT, array);
+            ScriptBlock.getSBPlayer(player).getObjectMap().put(KEY_SCRIPT, array);
             SEConfig.SCRIPT_SELECT.replace(type).send(player);
             event.setCancelled(true);
         } else if (chat.lastIndexOf("/" + KEY_SETTINGS) != -1 && SEPermission.TOOL_SCRIPT_CONNECTION.has(player)) {

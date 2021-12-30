@@ -16,11 +16,11 @@
 package com.github.yuttyann.scriptentityplus.listener;
 
 import com.github.yuttyann.scriptblockplus.BlockCoords;
+import com.github.yuttyann.scriptblockplus.ScriptBlock;
 import com.github.yuttyann.scriptblockplus.event.DelayEndEvent;
 import com.github.yuttyann.scriptblockplus.event.DelayRunEvent;
 import com.github.yuttyann.scriptblockplus.file.json.derived.BlockScriptJson;
 import com.github.yuttyann.scriptblockplus.item.ItemAction;
-import com.github.yuttyann.scriptblockplus.player.SBPlayer;
 import com.github.yuttyann.scriptblockplus.script.ScriptRead;
 import com.github.yuttyann.scriptblockplus.script.ScriptKey;
 import com.github.yuttyann.scriptblockplus.script.option.other.PlayerAction;
@@ -163,7 +163,7 @@ public class EntityListener implements Listener {
         }
         Player player = event.getPlayer();
         Entity entity = event.getRightClicked();
-        ObjectMap objectMap = SBPlayer.fromPlayer(player).getObjectMap();
+        ObjectMap objectMap = ScriptBlock.getSBPlayer(player).getObjectMap();
         try {
             objectMap.put(KEY_CLICK_ENTITY, entity);
             ItemStack main = player.getInventory().getItemInMainHand();
@@ -219,7 +219,7 @@ public class EntityListener implements Listener {
         if (!BlockScriptJson.get(ScriptKey.valueOf(list.get(0))).has(blockCoords)) {
             return;
         }
-        EntityScriptRead scriptRead = new EntityScriptRead(SBPlayer.fromPlayer(player), blockCoords, ScriptKey.valueOf(list.get(0)));
+        EntityScriptRead scriptRead = new EntityScriptRead(ScriptBlock.getSBPlayer(player), blockCoords, ScriptKey.valueOf(list.get(0)));
         scriptRead.setEntity(entity);
         scriptRead.put(PlayerAction.KEY, action);
         scriptRead.read(0);

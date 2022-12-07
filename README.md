@@ -1,4 +1,4 @@
-ScriptEntityPlus [Java8 MC1.9-1.18]
+ScriptEntityPlus [Java8 MC1.9-1.19.2]
 ==========
 概要
 --------------------------------------------------

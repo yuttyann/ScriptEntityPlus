@@ -20,6 +20,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.simple.JSONObject;
 
+import com.github.yuttyann.scriptblockplus.utils.Utils;
+
 @SuppressWarnings("unchecked")
 public class JsonElement {
 
@@ -51,7 +53,7 @@ public class JsonElement {
     public void setHoverEvent(@NotNull HoverEventType action, @NotNull String value) {
         JSONObject hoverEvent = new JSONObject();
         hoverEvent.put("action", action.getType());
-        hoverEvent.put("value", value);
+        hoverEvent.put(Utils.isCBXXXorLater("1.16") ? "contents" : "value", value);
         jsonObject.put("hoverEvent", hoverEvent);
     }
 

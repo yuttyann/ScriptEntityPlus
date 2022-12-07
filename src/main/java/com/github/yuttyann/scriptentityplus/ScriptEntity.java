@@ -25,7 +25,7 @@ import com.github.yuttyann.scriptentityplus.file.SEFiles;
 import com.github.yuttyann.scriptentityplus.item.ScriptConnection;
 import com.github.yuttyann.scriptentityplus.json.EntityScriptJson;
 import com.github.yuttyann.scriptentityplus.listener.EntityListener;
-import com.github.yuttyann.scriptentityplus.listener.PlayerListener;
+import com.github.yuttyann.scriptentityplus.listener.CommandListener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -60,7 +60,7 @@ public class ScriptEntity extends JavaPlugin {
                 CacheJson.loading(EntityScriptJson.class);
 
                 // リスナーの登録
-                manager.registerEvents(new PlayerListener(), this);
+                manager.registerEvents(new CommandListener(), this);
                 manager.registerEvents(new EntityListener(), this);
 
                 // アイテムアクションの登録

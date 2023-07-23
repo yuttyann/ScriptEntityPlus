@@ -61,7 +61,16 @@ ScriptEntityPlus [Java8 MC1.9-1.19.2]
 -----------
 [`ScriptBlockPlus`](https://github.com/yuttyann/ScriptBlockPlus)と**同様**です。  
 
-プラグイン記事
+ダウンロード
 -----------
-**[[Poteton, JP]](https://mcpoteton.com/mcpl-scriptentityplus)**  
-**[[SpigotMC, EN]](https://www.spigotmc.org/resources/scriptentityplus.80165/)**  
+| サイト | 言語 | 説明 |
+|:---|:---|:---|
+| [FileArchive](https://github.com/yuttyann/FileArchive/tree/main/ScriptEntityPlus) | `Japanese` | 作者が配布物をまとめているリポジトリです。 |
+| [SpigotMC](https://www.spigotmc.org/resources/80165/) | `English` | 作者が海外向けに配布を行うために利用しているサイトです。 |
+| [MCBBS](https://www.mcbbs.net/thread-691900-1-1.html) | `Chinese` | 有志が解説、配布を行っている中国のマインクラフトのフォーラムです。 |
+
+リンク
+-----------
+| ページ | 説明 |
+|:---|:---|
+| [MCPoteton](https://mcpoteton.com/mcpl-scriptentityplus) | あらゆる機能の解説をしています。 |

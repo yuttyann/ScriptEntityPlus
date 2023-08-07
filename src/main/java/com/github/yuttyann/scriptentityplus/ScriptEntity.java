@@ -16,7 +16,6 @@
 package com.github.yuttyann.scriptentityplus;
 
 import com.github.yuttyann.scriptblockplus.ScriptBlock;
-import com.github.yuttyann.scriptblockplus.Updater;
 import com.github.yuttyann.scriptblockplus.enums.CommandLog;
 import com.github.yuttyann.scriptblockplus.file.json.CacheJson;
 import com.github.yuttyann.scriptblockplus.item.ItemAction;
@@ -30,7 +29,6 @@ import com.github.yuttyann.scriptentityplus.listener.CommandListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -42,7 +40,7 @@ import java.util.Objects;
 
 public class ScriptEntity extends JavaPlugin {
 
-    public static final String SBP_VERSION = "2.2.1";
+    public static final String SBP_VERSION = "2.2.6";
 
     @Override
     public void onEnable() {
@@ -66,9 +64,6 @@ public class ScriptEntity extends JavaPlugin {
                 // アイテムアクションの登録
                 ItemAction.register(new ScriptConnection());
 
-                // アップデート処理
-                checkUpdate(Bukkit.getConsoleSender(), false);
-
                 // ダミーエンティティが削除されずに残っている場合は検索して削除
                 Bukkit.getWorlds().forEach(w -> w.getEntities().forEach(this::removeArmorStand));
             } else {
@@ -81,10 +76,6 @@ public class ScriptEntity extends JavaPlugin {
     @Override
     public void onDisable() {
         Bukkit.getWorlds().forEach(w -> w.getEntities().forEach(this::removeArmorStand));
-    }
-
-    public void checkUpdate(@NotNull CommandSender sender, boolean latestMessage) {
-        ScriptBlock.getInstance().checkUpdate(sender, new Updater(this), latestMessage);
     }
 
     public boolean removeArmorStand(@NotNull Entity entity) {

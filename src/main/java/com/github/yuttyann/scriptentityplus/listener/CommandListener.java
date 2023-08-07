@@ -15,9 +15,7 @@
  */
 package com.github.yuttyann.scriptentityplus.listener;
 
-import com.github.yuttyann.scriptblockplus.enums.Permission;
 import com.github.yuttyann.scriptblockplus.utils.StringUtils;
-import com.github.yuttyann.scriptentityplus.ScriptEntity;
 import com.github.yuttyann.scriptentityplus.item.ScriptConnection;
 
 import org.apache.logging.log4j.Level;
@@ -28,13 +26,10 @@ import org.apache.logging.log4j.core.filter.AbstractFilter;
 import org.apache.logging.log4j.message.Message;
 import org.apache.logging.log4j.core.Filter;
 import org.apache.logging.log4j.core.LogEvent;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.server.ServerCommandEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,21 +46,9 @@ public class CommandListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
-        Player player = event.getPlayer();
         String command = event.getMessage().startsWith("/") ? event.getMessage().substring(1) : event.getMessage();
-        if (Permission.COMMAND_CHECKVER.has(player) && (command.equals("sbp checkver") || command.equals("scriptblockplus checkver"))) {
-            ScriptEntity.getInstance().checkUpdate(player, true);
-        } else if (command.startsWith(TELLRAW_PREFIX)) {
+        if (command.startsWith(TELLRAW_PREFIX)) {
             TellrawCatcher.onCatch(command.substring(TELLRAW_PREFIX.length(), command.length() - 1), event);
-        }
-    }
-
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onServerCommand(ServerCommandEvent event) {
-        CommandSender sender = event.getSender();
-        String command = event.getCommand().startsWith("/") ? event.getCommand().substring(1) : event.getCommand();
-        if (Permission.COMMAND_CHECKVER.has(sender) && (command.equals("sbp checkver") || command.equals("scriptblockplus checkver"))) {
-            ScriptEntity.getInstance().checkUpdate(sender, true);
         }
     }
 
